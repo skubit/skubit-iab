@@ -64,14 +64,16 @@ public class BitKeystoreImporter {
             EncryptedData data = new EncryptedData(iv, key);
             ECKey ecKey = ECKey.fromPrivate(crypterScrypt.decrypt(data, aesKey));
 
+            String address = ecKey.toAddress(MainNetParams.get()).toString();
+
             KeyContentValues kcv = new KeyContentValues();
             kcv.putNickname(entry.getAlias());
-            kcv.putAddress(ecKey.toAddress(MainNetParams.get()).toString());
+            kcv.putAddress(address);
             kcv.putPriv(ecKey.getPrivKeyBytes());
             kcv.putPub(ecKey.getPubKey());
 
             KeySelection ks = new KeySelection();
-            ks.nickname(entry.getAlias());
+            ks.nickname(address);
 
             if (kcv.update(mContext.getContentResolver(), ks) != 1) {
                 kcv.insert(mContext.getContentResolver());
