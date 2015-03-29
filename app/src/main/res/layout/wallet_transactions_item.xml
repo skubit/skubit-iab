@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:padding="10dp">
+
+    <TextView
+            android:id="@+id/transaction_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/transaction_box"
+            android:maxLines="2"
+            android:textSize="14sp"
+            android:layout_marginRight="10dp"
+            android:textColor="#000000"
+            android:alpha="0.87"/>
+
+    <LinearLayout
+            android:id="@+id/transaction_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/transaction_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="right"/>
+
+        <TextView
+                android:id="@+id/transaction_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_status_pending"
+                android:textSize="6pt"
+                android:layout_gravity="right"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

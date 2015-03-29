@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "name": "bitId",
+            "type": "String"
+        },
+        {
+            "name": "app",
+            "type": "String"
+        },
+        {
+            "name": "scope",
+            "type": "String"
+        },
+        {
+            "name": "date",
+            "type": "Long"
+        }
+        ]
+}

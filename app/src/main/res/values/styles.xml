@@ -1,0 +1,81 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <!--
+        <item name="android:textColorPrimary">@color/primary_color</item>
+        <item name="android:textColorSecondary">@color/secondary_color</item>
+        -->
+    </style>
+
+    <style name="PurchaseDialog" parent="@style/LightDialogTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="LightDialogTheme" parent="@style/AppTheme">
+        <item name="android:windowBackground">@drawable/dialog_full_holo_light</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">stateUnchanged|adjustResize</item>
+    </style>
+
+    <style name="LicenseDialog" parent="@style/LightDialogTheme">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+
+    <!-- Wallet -->
+    <style name="wallet_balance_loaded">
+        <item name="android:textColor">@color/primary_color</item>
+    </style>
+
+    <style name="wallet_balance_invalid">
+        <item name="android:textColor">@color/wallet_balance_color_invalid</item>
+    </style>
+
+    <style name="TransactionDetailsLabel" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/transactiondetails_label</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TransactionStatus">
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.MyApp.HeaderBar.Spinner"
+           parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
+        <item name="android:divider">@null</item>
+    </style>
+</resources>

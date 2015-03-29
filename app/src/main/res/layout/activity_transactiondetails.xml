@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:id="@+id/transactiondetails_container"
+            android:layout_height="match_parent">
+        <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="15dp"
+                android:layout_margin="@dimen/home_card_padding"
+                card_view:cardCornerRadius="4dp"
+                card_view:contentPadding="16dp">
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <RelativeLayout
+                        android:id="@+id/transactiondetails_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:padding="5dp">
+
+                    <TextView
+                            android:id="@+id/transactiondetails_status"
+                            style="@style/TransactionStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/transaction_pending"
+                            android:text="@string/transaction_status_pending"/>
+
+                    <TextView
+                            android:id="@+id/transactiondetails_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@+id/transactiondetails_status"
+                            android:gravity="right"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#777"/>
+                </RelativeLayout>
+
+                <!-- Divider -->
+
+                <View
+                        android:id="@+id/transactiondetails_divider_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/transactiondetails_header"
+                        android:background="#eee"/>
+
+                <!-- Details -->
+
+                <RelativeLayout
+                        android:id="@+id/transactiondetails_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/transactiondetails_divider_header"
+                        android:padding="16dp">
+
+                    <TextView
+                            android:id="@+id/transactiondetails_label_amount"
+                            style="@style/TransactionDetailsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentTop="true"
+                            android:text="@string/transactiondetails_amountsent"/>
+
+                    <TextView
+                            android:id="@+id/transactiondetails_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_below="@+id/transactiondetails_label_amount"
+                            android:layout_marginTop="3dp"
+                            android:textColor="#50bf82"
+                            android:textSize="25sp"
+                            android:textStyle="bold"/>
+
+                    <TextView
+                            android:id="@+id/transactiondetails_label_fee"
+                            style="@style/TransactionDetailsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@+id/transactiondetails_amount"
+                            android:text="@string/fee"/>
+
+                    <TextView
+                            android:id="@+id/transactiondetails_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_below="@+id/transactiondetails_label_fee"
+                            android:layout_marginTop="3dp"
+                            android:textColor="@color/transaction_negative"
+                            android:textSize="25sp"
+                            android:textStyle="bold"/>
+                </RelativeLayout>
+
+                <!-- Divider -->
+
+                <View
+                        android:id="@+id/transactiondetails_details_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/transactiondetails_details"
+                        android:background="#eee"/>
+
+                <!--  -->
+
+                <TextView
+                        android:id="@+id/transactiondetails_label_notes"
+                        style="@style/TransactionDetailsLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/transactiondetails_notes"
+                        android:layout_alignRight="@+id/transactiondetails_label_notes"
+                        android:layout_marginLeft="15dp"
+                        android:text="@string/transactiondetails_notes"/>
+
+                <TextView
+                        android:id="@+id/transactiondetails_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/transactiondetails_details_header"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:textSize="14sp"
+                        android:maxLines="1"
+                        android:ellipsize="middle"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        />
+
+                <TextView
+                        android:id="@+id/transactiondetails_notes"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/transactiondetails_to"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toRightOf="@+id/transactiondetails_label_notes"
+                        android:paddingBottom="15dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </ScrollView>
+</LinearLayout>

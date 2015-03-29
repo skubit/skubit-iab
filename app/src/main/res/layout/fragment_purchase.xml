@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/fragment_purchase"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:minHeight="@dimen/purchase_dialog_small_height"
+              android:minWidth="@dimen/purchase_dialog_width"
+              android:orientation="vertical">
+
+    <LinearLayout
+            android:id="@+id/fragment_purchase_fields22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="16dp">
+        <LinearLayout
+                android:id="@+id/fragment_purchase_fields"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.02"
+                    android:ellipsize="marquee"
+                    android:fadingEdge="horizontal"
+                    android:lines="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="@dimen/text_large"/>
+
+            <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.02"
+                    android:maxLines="1"
+                    android:ellipsize="middle"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/primary_color"
+            android:textSize="24sp"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|right"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+        <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/cancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_btn"
+                android:background="@color/secondary_button_color"/>
+
+        <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order"
+                android:background="@color/primary_button_color"/>
+
+        <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/purchase_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/buy_btn"
+                android:background="@color/primary_button_color"/>
+    </LinearLayout>
+
+</LinearLayout>

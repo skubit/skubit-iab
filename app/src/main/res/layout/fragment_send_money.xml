@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:id="@+id/send_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="@dimen/purchase_dialog_small_height"
+            android:minWidth="@dimen/purchase_dialog_width"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:ellipsize="marquee"
+                    android:fadingEdge="horizontal"
+                    android:lines="1"
+                    android:text="@string/send_bitcoin_to"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="@dimen/text_medium"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <EditText
+                        android:id="@+id/sendTo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".9"
+                        android:ems="10">
+
+                    <requestFocus/>
+                </EditText>
+
+                <com.skubit.dialog.FloatButton
+                        android:id="@+id/cameraButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@color/secondary_color"
+                        materialdesign:iconDrawable="@drawable/ic_camera_black_36dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/purchaseLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.01"
+                    android:text="@string/send_money_amt"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10">
+            </EditText>
+
+            <TextView
+                    android:id="@+id/noteLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.01"
+                    android:text="@string/note"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                    android:id="@+id/note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10">
+            </EditText>
+
+            <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.02"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="bottom|right">
+
+            <com.gc.materialdesign.views.ButtonFlat
+                    android:id="@+id/button_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel_btn"
+                    android:background="@color/secondary_button_color"/>
+
+            <com.gc.materialdesign.views.ButtonFlat
+                    android:id="@+id/send_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send_btn"
+                    android:background="@color/primary_button_color"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

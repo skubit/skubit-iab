@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="default_text_color">#000000</color>
+    <color name="primary_color">#4CAF50</color>
+    <color name="secondary_color">#C8E6C9</color>
+    <color name="primary_button_color">#388E3C</color>
+    <color name="secondary_button_color">#1B5E20</color>
+    <color name="selected_nav">#E8F5E9</color>
+    <color name="nav_header">#81C784</color>
+
+    <!-- Transactions -->
+    <color name="transactiondetails_label">#000000</color>
+    <color name="transaction_positive">#4CAF50</color>
+    <color name="transaction_negative">#F44336</color>
+    <color name="transaction_inlinestatus_complete">#9196aa</color>
+    <color name="transaction_inlinestatus_pending">#f89406</color>
+    <color name="wallet_balance_color">#4CAF50</color>
+    <color name="wallet_balance_color_invalid">#666666</color>
+
+    <!-- zxing -->
+    <color name="barcode_viewfinder_laser">#ffcc0000</color>
+    <color name="barcode_viewfinder_mask">#60000000</color>
+    <color name="barcode_possible_result_points">#c0ffbd21</color>
+    <color name="barcode_result_view">#b0000000</color>
+    <color name="barcode_result_points">#c099cc00</color>
+
+</resources>

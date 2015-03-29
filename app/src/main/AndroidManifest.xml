@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.skubit.iab"
+          android:versionCode="9"
+          android:versionName="2.2">
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="com.skubit.BILLING"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <permission
+            android:name="com.skubit.BILLING"
+            android:description="@string/perm_billing"
+            android:protectionLevel="normal"/>
+
+    <application
+            android:name="com.skubit.iab.SkubitApplication"
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+
+        <activity
+                android:name="com.skubit.iab.activities.SkubitAndroidActivity"
+                android:label="@string/app_name"
+                android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.skubit.iab.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name="com.skubit.bitid.activities.AppRequestActivity"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                >
+        </activity>
+        <activity
+                android:name="com.coinbase.zxing.client.android.CaptureActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name="com.skubit.iab.activities.DisplayLicensesActivity"
+                android:exported="true"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name="com.skubit.iab.activities.PurchaseActivity"
+                android:exported="true"
+                android:label="@string/app_name"
+                android:permission="com.skubit.BILLING"
+                android:theme="@style/PurchaseDialog"
+                android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+                android:name="com.skubit.iab.activities.DepositMoneyActivity"
+                android:exported="true"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+                android:name="com.skubit.iab.activities.RequestMoneyActivity"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity
+                android:name="com.skubit.iab.activities.SendMoneyActivity"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <data android:scheme="bitcoin"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name="com.skubit.iab.activities.TransactionDetailsActivity"
+                android:label="@string/app_name"
+                android:parentActivityName="com.skubit.iab.activities.SkubitAndroidActivity">
+        </activity>
+
+        <service
+                android:name="com.skubit.android.billing.BillingService"
+                android:permission="com.skubit.BILLING"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="com.skubit.android.billing.IBillingService.BIND"/>
+            </intent-filter>
+        </service>
+
+        <!--Authentication-->
+        <activity
+                android:name="com.skubit.bitid.activities.DisplayLicensesActivity"
+                android:label="@string/app_name">
+        </activity>
+        <activity
+                android:name="com.skubit.bitid.activities.ImportActivity"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                android:windowSoftInputMode="adjustPan"
+                >
+        </activity>
+        <activity
+                android:name="com.skubit.bitid.activities.ExportActivity"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                android:windowSoftInputMode="adjustPan"
+                >
+        </activity>
+        <activity
+                android:name="com.skubit.bitid.activities.AuthenticationActivity"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                >
+
+            <intent-filter>
+                <action android:name="com.skubit.bitid.intent.AUTHENTICATE"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="tidbit"/>
+            </intent-filter>
+
+        </activity>
+        <provider
+                android:name="com.skubit.iab.provider.AccountProvider"
+                android:authorities="${applicationId}.provider"
+                android:exported="false"/>
+    </application>
+
+</manifest>

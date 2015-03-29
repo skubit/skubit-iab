@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_margin="@dimen/home_card_padding"
+            card_view:cardCornerRadius="4dp"
+            card_view:contentPadding="16dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                    android:layout_weight=".5"
+                    android:paddingRight="15dp">
+                <TextView
+                        android:id="@+id/wallet_balance_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="#666666"
+                        android:text="@string/wallet_balance_label"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                <TextView
+                        android:id="@+id/wallet_balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/wallet_balance_def"
+                        style="@style/wallet_balance_invalid"
+                        android:textSize="24sp"/>
+
+                <TextView
+                        android:id="@+id/wallet_balance_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/wallet_balance"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="#666666"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:orientation="vertical" android:layout_weight=".5">
+                <TextView
+                        android:id="@+id/wallet_available_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="#666666"
+                        android:text="@string/available_balance"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                <TextView
+                        android:id="@+id/wallet_available"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="@string/wallet_balance_def"
+                        style="@style/wallet_balance_invalid"
+                        android:textSize="24sp"/>
+
+                <TextView
+                        android:id="@+id/wallet_available_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/wallet_balance"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="#666666"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/spacer"/>
+
+    <TextView
+            android:id="@+id/wallet_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spacer"
+            android:layout_alignParentLeft="true"
+            android:textColor="#FFFFFF"
+            android:text="@string/transactions_refresh_error"
+            android:background="#B30000"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+</RelativeLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/contactLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_settings"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_margin="5dp"/>
+
+    <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:paddingBottom="10dp"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/fullNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/account_name"/>
+
+            <EditText
+                    android:id="@+id/fullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName">
+
+                <requestFocus/>
+            </EditText>
+
+            <TextView
+                    android:id="@+id/contactEmailLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contact_email"/>
+
+            <EditText
+                    android:id="@+id/contactEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"/>
+        </LinearLayout>
+    </ScrollView>
+    <View
+            style="@style/Divider"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"/>
+
+    <RelativeLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/save_btn"
+                android:background="@color/primary_button_color"/>
+    </RelativeLayout>
+
+</LinearLayout>
