@@ -41,7 +41,6 @@ public class BillingCookieInterceptor implements RequestInterceptor {
                             AccountsColumns.BITID + "=?",
                             new String[]{account}, null);
             if (c != null && c.getCount() > 0) {
-                System.out.println("foo: billing cookies: " + c.getCount());
                 AccountsCursor ac = new AccountsCursor(c);
                 ac.moveToFirst();
                 mAppToken = ac.getToken();

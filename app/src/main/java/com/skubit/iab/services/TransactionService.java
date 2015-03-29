@@ -16,7 +16,7 @@
 
 package com.skubit.iab.services;
 
-import com.skubit.bitid.services.BaseService;
+import com.skubit.BaseService;
 import com.skubit.iab.services.rest.TransactionRestService;
 
 import android.content.Context;

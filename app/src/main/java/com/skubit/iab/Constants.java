@@ -18,14 +18,12 @@ package com.skubit.iab;
 
 public class Constants {
 
-    public static final boolean IS_PRODUCTION = false;
+    public static final String SKUBIT_AUTH_PROD = "https://catalog.skubit.com/rest";
 
-    public static final boolean LOG_LEVEL_FULL = !IS_PRODUCTION;
+    public static final String SKUBIT_AUTH_TEST = "https://catalog.skubit.net/rest";
 
-    public static final String SKUBIT_AUTH = IS_PRODUCTION ? "https://catalog.skubit.com/rest"
-            : "https://catalog.skubit.net/rest";
+    public static final String SKUBIT_CATALOG_PROD = "https://catalog.skubit.com/rest/v1";
 
-    public static final String SKUBIT_CATALOG = IS_PRODUCTION ? "https://catalog.skubit.com/rest/v1"
-            : "https://catalog.skubit.net/rest/v1";
+    public static final String SKUBIT_CATALOG_TEST = "https://catalog.skubit.net/rest/v1";
 
 }

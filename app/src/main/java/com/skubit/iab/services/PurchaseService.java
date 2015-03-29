@@ -16,11 +16,12 @@
 
 package com.skubit.iab.services;
 
+import com.skubit.BaseService;
 import com.skubit.iab.services.rest.PurchaseRestService;
 
 import android.content.Context;
 
-public class PurchaseService extends BillingBaseService<PurchaseRestService> {
+public class PurchaseService extends BaseService<PurchaseRestService> {
 
     public PurchaseService(String account, Context context) {
         super(account, context);

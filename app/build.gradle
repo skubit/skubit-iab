@@ -13,9 +13,11 @@ android {
     productFlavors {
         prod {
             applicationId = "com.skubit.iab"
+            versionName="2.2"
         }
         dev {
             applicationId = "net.skubit.iab"
+            versionName="2.2-TestNet"
         }
     }
 

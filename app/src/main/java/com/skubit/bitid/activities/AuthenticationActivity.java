@@ -169,14 +169,4 @@ public class AuthenticationActivity extends ProgressActivity<Bundle> implements 
     public void load(Bundle data, int type) {
 
     }
-
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("authrequest result: " + resultCode);
-        setResult(resultCode, data);
-        finish();
-    }
-    */
 }

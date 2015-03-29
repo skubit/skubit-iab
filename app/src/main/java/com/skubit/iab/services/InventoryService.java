@@ -16,11 +16,12 @@
 
 package com.skubit.iab.services;
 
+import com.skubit.BaseService;
 import com.skubit.iab.services.rest.InventoryRestService;
 
 import android.content.Context;
 
-public class InventoryService extends BillingBaseService<InventoryRestService> {
+public class InventoryService extends BaseService<InventoryRestService> {
 
     public InventoryService(String account, Context context) {
         super(account, context);

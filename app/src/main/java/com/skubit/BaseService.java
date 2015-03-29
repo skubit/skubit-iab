@@ -14,8 +14,12 @@
  * the License.
  */
 
-package com.skubit.bitid.services;
+package com.skubit;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skubit.bitid.services.CookieInterceptor;
+import com.skubit.iab.BuildConfig;
 import com.skubit.iab.Constants;
 
 import android.content.Context;
@@ -29,16 +33,28 @@ public abstract class BaseService<T> {
     private T mRestService;
 
     public BaseService(String account, Context context) {
+        RestAdapter.Builder builder = new RestAdapter.Builder();
+
         CookieInterceptor interceptor = new CookieInterceptor(
                 account, context);
-        final RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SKUBIT_CATALOG)
-                .setConverter(new JacksonConverter())
-                .setRequestInterceptor(interceptor).build();
-        if (Constants.LOG_LEVEL_FULL) {
-            restAdapter.setLogLevel(LogLevel.FULL);
+        builder.setRequestInterceptor(interceptor);
+
+        if (BuildConfig.DEBUG) {
+            builder.setLogLevel(LogLevel.FULL)
+                    .setConverter(new JacksonConverter());
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            builder.setConverter(new JacksonConverter(mapper));
         }
-        mRestService = restAdapter.create(getClazz());
+
+        if (BuildConfig.FLAVOR.equals("prod")) {
+            builder.setEndpoint(Constants.SKUBIT_CATALOG_PROD);
+        } else if (BuildConfig.FLAVOR.equals("dev")) {
+            builder.setEndpoint(Constants.SKUBIT_CATALOG_TEST);
+        }
+
+        mRestService = builder.build().create(getClazz());
     }
 
     public abstract Class<T> getClazz();

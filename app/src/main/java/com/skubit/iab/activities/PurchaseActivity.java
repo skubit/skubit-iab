@@ -178,7 +178,6 @@ public final class PurchaseActivity extends ProgressActivity<Bundle> implements
     public void onBackPressed() {
         super.onBackPressed();
         if (mUIState != null && mUIState.equals(UIState.CREATE_ORDER)) {
-            System.out.println("foo: cancel request");
             //  setResult(BillingResponseCodes.RESULT_USER_CANCELED,
             //          new Intent().putExtra("RESPONSE_CODE", BillingResponseCodes.RESULT_USER_CANCELED));
         }
@@ -217,25 +216,12 @@ public final class PurchaseActivity extends ProgressActivity<Bundle> implements
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        System.out.println("foo: onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        System.out.println("foo: onPause");
-    }
-
     private int genenerateId(int loaderId) {
         return (loaderId + mPurchaseData.signatureHash + mAccount).hashCode();
     }
 
     @Override
     public void load(Bundle data, int type) {
-        System.out.println("foo: fragment calling loader");
         if (type == PutPurchaseLoader.LOADER_SKU) {
             getLoaderManager().initLoader(genenerateId(LoaderId.SKU_LOADER), null, mSkuLoader);
         } else if (type == PutPurchaseLoader.LOADER_PURCHASE) {

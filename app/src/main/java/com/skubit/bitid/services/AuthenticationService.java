@@ -15,7 +15,10 @@
  */
 package com.skubit.bitid.services;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skubit.bitid.services.rest.AuthenticationRestService;
+import com.skubit.iab.BuildConfig;
 import com.skubit.iab.Constants;
 
 import android.content.Context;
@@ -28,13 +31,25 @@ public class AuthenticationService {
     private final AuthenticationRestService mRestService;
 
     public AuthenticationService(Context context) {
-        final RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.SKUBIT_AUTH)
-                .setConverter(new JacksonConverter()).build();
-        if (Constants.LOG_LEVEL_FULL) {
-            restAdapter.setLogLevel(RestAdapter.LogLevel.FULL);
+        RestAdapter.Builder builder = new RestAdapter.Builder();
+
+        if(BuildConfig.DEBUG) {
+            builder.setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setConverter(new JacksonConverter());
+        } else {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+            builder.setConverter(new JacksonConverter(mapper));
         }
-        mRestService = restAdapter.create(AuthenticationRestService.class);
+
+        if (BuildConfig.FLAVOR.equals("prod")) {
+            builder.setEndpoint(Constants.SKUBIT_AUTH_PROD);
+        } else if (BuildConfig.FLAVOR.equals("dev")) {
+            builder.setEndpoint(Constants.SKUBIT_AUTH_TEST);
+        }
+
+        mRestService = builder.build().create(AuthenticationRestService.class);
     }
 
     public AuthenticationRestService getRestService() {

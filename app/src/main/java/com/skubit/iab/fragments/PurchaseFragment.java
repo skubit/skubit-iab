@@ -54,8 +54,6 @@ public class PurchaseFragment extends DefaultFragment {
 
     private ButtonFlat mSendButton;
 
-    private ImageView mCoverArt;
-
     public static PurchaseFragment newInstance() {
         PurchaseFragment purchaseFragment = new PurchaseFragment();
         return purchaseFragment;
@@ -72,8 +70,6 @@ public class PurchaseFragment extends DefaultFragment {
         mAccount = getActivity().getIntent().getStringExtra("PurchaseActivity.account");
 
         mAmount = (EditText) view.findViewById(R.id.amount);
-
-        mCoverArt = (ImageView) view.findViewById(R.id.coverArt);
 
         mTitle = (TextView) view.findViewById(R.id.title);
         mTitle.setTypeface(FontManager.LITE);

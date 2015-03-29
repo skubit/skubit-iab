@@ -92,7 +92,6 @@ public class AppRequestActivity extends ProgressActivity<Bundle> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("apprequest result: " + resultCode);
         setResult(resultCode, data);
         finish();
     }

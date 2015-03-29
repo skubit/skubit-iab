@@ -63,7 +63,6 @@ public final class GetSkuDetailsLoader extends BaseLoader<LoaderResult<SkuDetail
         try {
             result.result = mInventoryService.getSkuDetails(mPackageName,
                     mSku);
-            System.out.println("foo: loaded sku from external service");
             return result;
         } catch (Exception e) {
             e.printStackTrace();
