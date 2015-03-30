@@ -26,14 +26,12 @@ import com.skubit.iab.loaders.PutPurchaseLoader;
 import com.skubit.shared.dto.InAppPurchaseDataDto;
 import com.skubit.shared.dto.PurchaseDataStatus;
 import com.skubit.shared.dto.SkuDetailsDto;
-import com.squareup.picasso.Picasso;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PurchaseFragment extends DefaultFragment {

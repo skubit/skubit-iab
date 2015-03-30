@@ -18,16 +18,46 @@ package com.skubit.iab;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import com.skubit.AccountSettings;
+import com.skubit.Events;
+import com.skubit.iab.provider.accounts.AccountsCursor;
+import com.skubit.iab.provider.accounts.AccountsSelection;
 import com.skubit.shared.dto.ErrorMessage;
 import com.skubit.shared.dto.TransactionType;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.text.TextUtils;
 
 import retrofit.RetrofitError;
 import retrofit.mime.TypedByteArray;
 
 public class Utils {
+
+    public static void changeAccount(Context context,  String userId) {
+        final long token = Binder.clearCallingIdentity();
+        AccountsSelection as = new AccountsSelection();
+        as.bitid(userId);
+        AccountsCursor accountsCursor = null;
+        try {
+            accountsCursor = as.query(context.getContentResolver());
+            if(accountsCursor != null && accountsCursor.getCount() > 0) {
+                accountsCursor.moveToFirst();
+                AccountSettings.get(context).saveBitId(userId);
+                AccountSettings.get(context).saveToken(accountsCursor.getToken());
+
+                Events.accountChange(context, userId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(accountsCursor != null) {
+                accountsCursor.close();
+            }
+        }
+        Binder.restoreCallingIdentity(token);
+    }
 
     public static String transactionToText(TransactionType type) {
         if (type.equals(TransactionType.PURCHASE)) {

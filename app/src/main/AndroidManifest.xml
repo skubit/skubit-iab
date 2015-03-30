@@ -33,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.skubit.iab.MAIN"/>
+                <action android:name="${applicationId}.MAIN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
@@ -103,7 +103,7 @@
                 android:permission="com.skubit.BILLING"
                 android:exported="true">
             <intent-filter>
-                <action android:name="com.skubit.android.billing.IBillingService.BIND"/>
+                <action android:name="${applicationId}.billing.IBillingService.BIND"/>
             </intent-filter>
         </service>
 

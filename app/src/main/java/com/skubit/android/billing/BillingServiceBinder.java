@@ -23,6 +23,7 @@ import com.skubit.AccountSettings;
 import com.skubit.bitid.activities.AppRequestActivity;
 import com.skubit.iab.BuildConfig;
 import com.skubit.iab.Permissions;
+import com.skubit.iab.Utils;
 import com.skubit.iab.activities.PurchaseActivity;
 import com.skubit.iab.provider.authorization.AuthorizationColumns;
 import com.skubit.iab.provider.authorization.AuthorizationCursor;
@@ -169,6 +170,8 @@ public class BillingServiceBinder extends IBillingService.Stub {
                     BillingResponseCodes.RESULT_DEVELOPER_ERROR);
             return bundle;
         }
+        Utils.changeAccount(mContext, userId);
+
         PendingIntent pending = PendingIntent.getActivity(mContext,
                 (sku + userId).hashCode(),
                 purchaseIntent, 0);
@@ -270,6 +273,7 @@ public class BillingServiceBinder extends IBillingService.Stub {
                     BillingResponseCodes.RESULT_USER_ACCESS);
             return bundle;
         }
+        Utils.changeAccount(mContext, userId);
         PurchaseRestService service = new PurchaseService(account, mContext).getRestService();
 
         ArrayList<String> ids = new ArrayList<>();
@@ -340,6 +344,7 @@ public class BillingServiceBinder extends IBillingService.Stub {
                     BillingResponseCodes.RESULT_USER_ACCESS);
             return bundle;
         }
+        Utils.changeAccount(mContext, userId);
 
         InventoryRestService service = new InventoryService(
                 account, mContext).getRestService();
