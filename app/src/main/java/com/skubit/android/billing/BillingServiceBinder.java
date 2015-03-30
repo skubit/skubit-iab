@@ -530,7 +530,7 @@ public class BillingServiceBinder extends IBillingService.Stub {
     }
 
     private boolean isValidType(String type) {
-        return TextUtils.equals(type, "inapp")//TODO: is this buy or inapp???
+        return TextUtils.equals(type, "inapp")
                 || TextUtils.equals(type, "subs");
     }
 }

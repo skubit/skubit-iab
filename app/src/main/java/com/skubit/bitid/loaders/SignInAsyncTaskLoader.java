@@ -25,8 +25,10 @@ import com.skubit.bitid.TidBit;
 import com.skubit.bitid.Utils;
 import com.skubit.iab.provider.accounts.AccountsColumns;
 import com.skubit.iab.provider.accounts.AccountsContentValues;
+import com.skubit.iab.provider.accounts.AccountsSelection;
 import com.skubit.iab.provider.authorization.AuthorizationColumns;
 import com.skubit.iab.provider.authorization.AuthorizationContentValues;
+import com.skubit.iab.provider.authorization.AuthorizationSelection;
 import com.skubit.shared.dto.BitJwtCallbackResponseDto;
 
 import org.bitcoinj.core.ECKey;
@@ -178,11 +180,10 @@ public class SignInAsyncTaskLoader extends AsyncTaskLoader<BitJwtCallbackRespons
 
                 kcv.putDate(new Date().getTime());
 
-                getContext().getContentResolver().delete(AccountsColumns.CONTENT_URI,
-                        AccountsColumns.BITID + "=?",
-                        new String[]{
-                                id
-                        });
+                AccountsSelection as = new AccountsSelection();
+                as.bitid(id);
+                as.delete(getContext().getContentResolver());
+
                 getContext().getContentResolver().insert(AccountsColumns.CONTENT_URI, kcv.values());
 
                 AuthorizationContentValues acv = new AuthorizationContentValues();
@@ -191,14 +192,23 @@ public class SignInAsyncTaskLoader extends AsyncTaskLoader<BitJwtCallbackRespons
                 acv.putApp(mBitID.getApplication());
                 acv.putDate(new Date().getTime());
 
-                getContext().getContentResolver().delete(AuthorizationColumns.CONTENT_URI,
-                        AccountsColumns.BITID + "=?",
-                        new String[]{
-                                id
-                        });
+                //BUG in 3rd-party library - multiple selects not working
+              //  AuthorizationSelection authSelect = new AuthorizationSelection();
+              //  authSelect.bitid(id);
+              //  authSelect.app(mBitID.getApplication());
 
-                getContext().getContentResolver()
-                        .insert(AuthorizationColumns.CONTENT_URI, acv.values());
+                getContext().getContentResolver().delete(AuthorizationColumns.CONTENT_URI,
+                        AuthorizationColumns.BITID + "=? AND " + AuthorizationColumns.APP + "=?",
+                        new String[]{
+                                id, mBitID.getApplication()
+                        });
+                acv.insert(getContext().getContentResolver());
+
+/*
+                if (acv.update(getContext().getContentResolver(), authSelect) != 1) {
+                    acv.insert(getContext().getContentResolver());
+                }
+*/
 
                 AccountSettings.get(getContext()).saveToken(dto.getMasterToken());
                 AccountSettings.get(getContext()).saveBitId(id);
