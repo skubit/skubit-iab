@@ -66,4 +66,5 @@
     <string name="product_not_found">Unable to find the product you requested</string>
     <string name="order">ORDER</string>
     <string name="available_balance">AVAILABLE FUNDS</string>
+    <string name="login_register">Login/Register</string>
 </resources>

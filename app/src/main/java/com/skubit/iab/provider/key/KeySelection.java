@@ -1,16 +1,18 @@
 package com.skubit.iab.provider.key;
 
-import com.skubit.iab.provider.base.AbstractSelection;
+import java.util.Date;
 
+import android.content.Context;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
+
+import com.skubit.iab.provider.base.AbstractSelection;
 
 /**
  * Selection for the {@code key} table.
  */
 public class KeySelection extends AbstractSelection<KeySelection> {
-
     @Override
     protected Uri baseUri() {
         return KeyColumns.CONTENT_URI;
@@ -20,18 +22,14 @@ public class KeySelection extends AbstractSelection<KeySelection> {
      * Query the given content resolver using this selection.
      *
      * @param contentResolver The content resolver to query.
-     * @param projection      A list of which columns to return. Passing null will return all
-     *                        columns, which is inefficient.
-     * @param sortOrder       How to order the rows, formatted as an SQL ORDER BY clause (excluding
-     *                        the ORDER BY itself). Passing null will use the default sort
-     *                        order, which may be unordered.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @param sortOrder How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort
+     *            order, which may be unordered.
      * @return A {@code KeyCursor} object, which is positioned before the first entry, or null.
      */
     public KeyCursor query(ContentResolver contentResolver, String[] projection, String sortOrder) {
         Cursor cursor = contentResolver.query(uri(), projection, sel(), args(), sortOrder);
-        if (cursor == null) {
-            return null;
-        }
+        if (cursor == null) return null;
         return new KeyCursor(cursor);
     }
 
@@ -47,6 +45,35 @@ public class KeySelection extends AbstractSelection<KeySelection> {
      */
     public KeyCursor query(ContentResolver contentResolver) {
         return query(contentResolver, null, null);
+    }
+
+    /**
+     * Query the given content resolver using this selection.
+     *
+     * @param context The context to use for the query.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @param sortOrder How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort
+     *            order, which may be unordered.
+     * @return A {@code KeyCursor} object, which is positioned before the first entry, or null.
+     */
+    public KeyCursor query(Context context, String[] projection, String sortOrder) {
+        Cursor cursor = context.getContentResolver().query(uri(), projection, sel(), args(), sortOrder);
+        if (cursor == null) return null;
+        return new KeyCursor(cursor);
+    }
+
+    /**
+     * Equivalent of calling {@code query(context, projection, null)}.
+     */
+    public KeyCursor query(Context context, String[] projection) {
+        return query(context, projection, null);
+    }
+
+    /**
+     * Equivalent of calling {@code query(context, projection, null, null)}.
+     */
+    public KeyCursor query(Context context) {
+        return query(context, null, null);
     }
 
 

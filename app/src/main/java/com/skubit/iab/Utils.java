@@ -20,13 +20,21 @@ import com.google.gson.JsonSyntaxException;
 
 import com.skubit.AccountSettings;
 import com.skubit.Events;
+import com.skubit.bitid.ECKeyData;
+import com.skubit.iab.provider.accounts.AccountsColumns;
 import com.skubit.iab.provider.accounts.AccountsCursor;
 import com.skubit.iab.provider.accounts.AccountsSelection;
+import com.skubit.iab.provider.key.KeyColumns;
+import com.skubit.iab.provider.key.KeyContentValues;
 import com.skubit.shared.dto.ErrorMessage;
 import com.skubit.shared.dto.TransactionType;
 
+import org.bitcoinj.core.ECKey;
+
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Binder;
 import android.text.TextUtils;
 
@@ -35,24 +43,78 @@ import retrofit.mime.TypedByteArray;
 
 public class Utils {
 
-    public static void changeAccount(Context context,  String userId) {
+    public static void createDefaultAccount(final ContentResolver contentResolver,
+            final String alias) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                ECKeyData key = new ECKeyData(new ECKey());
+                KeyContentValues kcv = new KeyContentValues();
+                kcv.putPub(key.getPublicKey());
+                kcv.putPriv(key.getPrivateKey());
+                kcv.putAddress((key.getAddress()));
+                kcv.putNickname(alias);
+
+                contentResolver.insert(KeyColumns.CONTENT_URI, kcv.values());
+            }
+        });
+        t.start();
+    }
+
+    public static boolean hasKeys(Context context) {
+        Cursor accountsCursor = context.getContentResolver()
+                .query(KeyColumns.CONTENT_URI, null, null, null, null);
+        try {
+            return accountsCursor != null && accountsCursor.getCount() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (accountsCursor != null) {
+                accountsCursor.close();
+            }
+        }
+        return false;
+    }
+
+    public static String getAccountAlias(Context context, String userId) {
+        AccountsSelection as = new AccountsSelection();
+        as.bitid(userId);
+        AccountsCursor accountsCursor = null;
+        try {
+            accountsCursor = as.query(context.getContentResolver());
+            if (accountsCursor != null && accountsCursor.getCount() > 0) {
+                accountsCursor.moveToFirst();
+                return accountsCursor.getAlias();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (accountsCursor != null) {
+                accountsCursor.close();
+            }
+        }
+        return null;
+    }
+
+    public static void changeAccount(Context context, String userId) {
         final long token = Binder.clearCallingIdentity();
         AccountsSelection as = new AccountsSelection();
         as.bitid(userId);
         AccountsCursor accountsCursor = null;
         try {
             accountsCursor = as.query(context.getContentResolver());
-            if(accountsCursor != null && accountsCursor.getCount() > 0) {
+            if (accountsCursor != null && accountsCursor.getCount() > 0) {
                 accountsCursor.moveToFirst();
                 AccountSettings.get(context).saveBitId(userId);
                 AccountSettings.get(context).saveToken(accountsCursor.getToken());
 
-                Events.accountChange(context, userId);
+                Events.accountChange(context, userId, accountsCursor.getAlias());
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(accountsCursor != null) {
+            if (accountsCursor != null) {
                 accountsCursor.close();
             }
         }
@@ -73,7 +135,7 @@ public class Utils {
 
     public static ErrorMessage readRetrofitError(Exception e) {
         RetrofitError error = (RetrofitError) e;
-        if(error.getResponse() != null) {
+        if (error.getResponse() != null) {
             String json = new String(((TypedByteArray) error.getResponse().getBody())
                     .getBytes());
             try {

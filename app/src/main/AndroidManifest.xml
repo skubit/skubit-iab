@@ -2,13 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="com.skubit.iab"
-          android:versionCode="9"
-          android:versionName="2.2">
+          android:versionCode="10">
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="com.skubit.BILLING"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <supports-screens
@@ -16,11 +14,6 @@
             android:normalScreens="true"
             android:smallScreens="true"
             android:xlargeScreens="true" />
-
-    <permission
-            android:name="com.skubit.BILLING"
-            android:description="@string/perm_billing"
-            android:protectionLevel="normal"/>
 
     <application
             android:name="com.skubit.iab.SkubitApplication"
@@ -45,6 +38,12 @@
         </activity>
         <activity
                 android:name="com.skubit.bitid.activities.AppRequestActivity"
+                android:label="@string/app_name"
+                android:theme="@style/PurchaseDialog"
+                >
+        </activity>
+        <activity
+                android:name="com.skubit.bitid.activities.BasicAuthActivity"
                 android:label="@string/app_name"
                 android:theme="@style/PurchaseDialog"
                 >
@@ -106,7 +105,6 @@
 
         <service
                 android:name="com.skubit.android.billing.BillingService"
-                android:permission="com.skubit.BILLING"
                 android:exported="true">
             <intent-filter>
                 <action android:name="${applicationId}.billing.IBillingService.BIND"/>
@@ -133,7 +131,7 @@
                 >
         </activity>
         <activity
-                android:name="com.skubit.bitid.activities.AuthenticationActivity"
+                android:name="com.skubit.bitid.activities.KeyAuthActivity"
                 android:label="@string/app_name"
                 android:theme="@style/PurchaseDialog"
                 >

@@ -3,6 +3,7 @@ package com.skubit.navigation;
 import com.skubit.AccountSettings;
 import com.skubit.Intents;
 import com.skubit.iab.R;
+import com.skubit.iab.Utils;
 import com.skubit.iab.provider.accounts.AccountsColumns;
 
 import android.app.Activity;
@@ -62,9 +63,9 @@ public final class NavigationDrawerFragment extends Fragment implements Navigati
         @Override
         public void onReceive(Context context, Intent intent) {
             if (mAccountView != null) {
-                mAccountView.displayAccountName(intent.getStringExtra(Intents.ACCOUNT_NAME));
+                String alias = intent.getStringExtra(Intents.ALIAS);
+                mAccountView.displayAccountName(alias);
             }
-
         }
     };
 
@@ -88,11 +89,12 @@ public final class NavigationDrawerFragment extends Fragment implements Navigati
     @Override
     public void onStart() {
         super.onStart();
-        mAccountView.displayAccountName(AccountSettings.get(getActivity()).retrieveBitId());
+        String alias = Utils.getAccountAlias(getActivity().getBaseContext(),
+                AccountSettings.get(getActivity()).retrieveBitId());
+        mAccountView.displayAccountName(alias);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(
                 mAccountChangeReceiver,
                 Intents.accountChangeFilter());
-
     }
 
     @Override
@@ -120,11 +122,15 @@ public final class NavigationDrawerFragment extends Fragment implements Navigati
         mDrawerList.setAdapter(adapter);
         selectItem(mCurrentSelectedPosition);
 
+        String currentId = AccountSettings.get(getActivity()).retrieveBitId();
+        String alias = Utils.getAccountAlias(getActivity().getBaseContext(), currentId);
+
         Cursor c = getActivity().getContentResolver()
                 .query(AccountsColumns.CONTENT_URI, null, null, null, null);
+
         mAccountView.initialize(getActivity(),
                 new AccountDropDownClickEvent(getActivity().getBaseContext(), c), c,
-                AccountsColumns.BITID, AccountSettings.get(getActivity()).retrieveBitId());
+                AccountsColumns.ALIAS, alias);
 
         return view;
     }

@@ -18,12 +18,16 @@ package com.skubit;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 
 public class Events {
 
-    public static void accountChange(Context context, String accountName) {
+    public static void accountChange(Context context, String accountName, String alias) {
         Intent intent = Intents.accountChangeIntent();
         intent.putExtra(Intents.ACCOUNT_NAME, accountName);
+        if(!TextUtils.isEmpty(alias)) {
+            intent.putExtra(Intents.ALIAS, alias);
+        }
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 }

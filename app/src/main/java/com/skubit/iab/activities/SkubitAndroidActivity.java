@@ -18,21 +18,17 @@ package com.skubit.iab.activities;
 
 import com.coinbase.zxing.client.android.Intents;
 import com.skubit.AccountSettings;
-import com.skubit.bitid.ECKeyData;
 import com.skubit.bitid.activities.AppRequestActivity;
-import com.skubit.bitid.activities.AuthenticationActivity;
+import com.skubit.bitid.activities.KeyAuthActivity;
 import com.skubit.iab.BuildConfig;
 import com.skubit.iab.FontManager;
 import com.skubit.iab.Permissions;
 import com.skubit.iab.R;
+import com.skubit.iab.Utils;
 import com.skubit.iab.fragments.AccountSettingsFragment;
 import com.skubit.iab.fragments.TransactionsFragment;
-import com.skubit.iab.provider.key.KeyColumns;
-import com.skubit.iab.provider.key.KeyContentValues;
 import com.skubit.navigation.NavigationDrawerCallbacks;
 import com.skubit.navigation.NavigationDrawerFragment;
-
-import org.bitcoinj.core.ECKey;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -100,32 +96,11 @@ public class SkubitAndroidActivity extends ActionBarActivity implements Navigati
         mAccountSettings = AccountSettings.get(this);
         String cookie = mAccountSettings.retrieveToken();
         if (TextUtils.isEmpty(cookie)) {
-            preloadHackForKey();
-
             Intent intent = AppRequestActivity.newInstance(BuildConfig.APPLICATION_ID,
                     Permissions.SKUBIT_DEFAULT);
             startActivity(intent);
-            //TODO: get from db
         }
     }
-
-    private void preloadHackForKey() {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //  boolean a = ECKey.FAKE_SIGNATURES;
-                ECKeyData key = new ECKeyData(new ECKey());
-                KeyContentValues kcv = new KeyContentValues();
-                kcv.putPub(key.getPublicKey());
-                kcv.putPriv(key.getPrivateKey());
-                kcv.putAddress((key.getAddress()));
-                kcv.putNickname("Default Account");
-                getContentResolver().insert(KeyColumns.CONTENT_URI, kcv.values());
-            }
-        });
-        t.start();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,7 +131,7 @@ public class SkubitAndroidActivity extends ActionBarActivity implements Navigati
         if (data == null) {
             return;
         }
-        Intent authenticationIntent = AuthenticationActivity
+        Intent authenticationIntent = KeyAuthActivity
                 .newInstance(data.getStringExtra("SCAN_RESULT"), false);
         startActivity(authenticationIntent);
     }

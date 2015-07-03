@@ -2,6 +2,8 @@ package com.skubit.iab.provider.authorization;
 
 import com.skubit.iab.provider.base.BaseModel;
 
+import java.util.Date;
+
 /**
  * Data model for the {@code authorization} table.
  */
@@ -12,6 +14,12 @@ public interface AuthorizationModel extends BaseModel {
      * Can be {@code null}.
      */
     String getBitid();
+
+    /**
+     * Get the {@code alias} value.
+     * Can be {@code null}.
+     */
+    String getAlias();
 
     /**
      * Get the {@code app} value.

@@ -73,7 +73,6 @@ public abstract class ProgressActivity<T> extends FragmentActivity
 
     @Override
     public void sendResultsBackToCaller(int resultCode, String message, boolean finish) {
-        System.out.println("foo:" + resultCode + ":" + message);
         if (TextUtils.isEmpty(message)) {
             setResult(resultCode);
         } else {
@@ -91,7 +90,6 @@ public abstract class ProgressActivity<T> extends FragmentActivity
 
     @Override
     public void sendResultsBackToCaller(int resultCode, Bundle data, boolean finish) {
-        System.out.println("foo:" + resultCode + ": bundle");
         setResult(resultCode, new Intent().replaceExtras(data));
         if(finish) {
             finish();
@@ -100,7 +98,6 @@ public abstract class ProgressActivity<T> extends FragmentActivity
 
     @Override
     public void cancel() {
-        System.out.println("foo: cancel");
         setResult(ResultCode.USER_CANCELED);
         finish();
     }
@@ -138,12 +135,5 @@ public abstract class ProgressActivity<T> extends FragmentActivity
         return mContainer != null;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("foo: result: " + resultCode);
-        //setResult(resultCode, data);
-        //finish();
-    }
 
 }

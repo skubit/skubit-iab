@@ -39,7 +39,7 @@ import android.widget.Toast;
 
 import java.net.URISyntaxException;
 
-public class AuthenticationActivity extends ProgressActivity<Bundle> implements BitIdCallback {
+public class KeyAuthActivity extends ProgressActivity<Bundle> implements BitIdCallback {
 
     private String mBitId;
 
@@ -48,7 +48,7 @@ public class AuthenticationActivity extends ProgressActivity<Bundle> implements 
     public static Intent newInstance(String bitId, boolean inband) {
         Intent i = new Intent();
         i.setClassName(com.skubit.iab.BuildConfig.APPLICATION_ID,
-                AuthenticationActivity.class.getName());
+                KeyAuthActivity.class.getName());
         i.putExtra(BitID.EXTRA_NAME, bitId);
         i.putExtra(BitID.EXTRA_INBAND, inband);
         return i;

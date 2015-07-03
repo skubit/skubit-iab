@@ -43,7 +43,7 @@ public class AccountDropDownClickEvent implements DropDownClickEvent {
         AccountSettings.get(mContext).saveBitId(bitId);
         AccountSettings.get(mContext).saveToken(accountsCursor.getToken());
 
-        Events.accountChange(mContext, bitId);
+        Events.accountChange(mContext, bitId, accountsCursor.getAlias());
         return bitId;
     }
 }

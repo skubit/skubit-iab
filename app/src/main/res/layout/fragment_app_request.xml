@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:layout_weight="0"
+            android:text="Select Login Method"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:minHeight="200dp"
+            android:paddingBottom="10dp"
+            android:choiceMode="singleChoice"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|right"
+            android:orientation="horizontal">
+
+        <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/cancelBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_btn"
+                android:background="@color/secondary_button_color"/>
+
+        <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/chooseLoginBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:text="Select"
+                android:background="@color/primary_button_color"/>
+    </LinearLayout>
+</LinearLayout>

@@ -15,11 +15,17 @@
  */
 package com.skubit.bitid.activities;
 
+import com.skubit.AccountSettings;
+import com.skubit.android.billing.BillingResponseCodes;
+import com.skubit.bitid.UIState;
+import com.skubit.bitid.fragments.LoginChoiceFragment;
 import com.skubit.bitid.loaders.TidbitLoader;
 import com.skubit.dialog.LoaderResult;
 import com.skubit.dialog.ProgressActivity;
+import com.skubit.iab.Utils;
 import com.skubit.shared.dto.TidbitDto;
 
+import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -53,8 +59,9 @@ public class AppRequestActivity extends ProgressActivity<Bundle> {
                             showMessage(data.errorMessage);
                         } else {
                             startActivityForResult(
-                                    AuthenticationActivity
+                                    KeyAuthActivity
                                             .newInstance(data.result.getTidbit(), true), 0);
+
                         }
                         hideProgress();
                     }
@@ -65,6 +72,8 @@ public class AppRequestActivity extends ProgressActivity<Bundle> {
 
                 }
             };
+
+    private AccountSettings mAccountSettings;
 
     public static Intent newInstance(String packageName, String scopes) {
         Intent intent = new Intent();
@@ -78,21 +87,45 @@ public class AppRequestActivity extends ProgressActivity<Bundle> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mPackageName = getIntent().getStringExtra(PACKAGE_NAME);
         mScopes = getIntent().getStringExtra(SCOPES);
 
-        getLoaderManager().initLoader(3000, null, tidbitLoader);
+        mAccountSettings = AccountSettings.get(this);
+        if(!Utils.hasKeys(getBaseContext())) {
+            Utils.createDefaultAccount(getContentResolver(), "Default Account");
+        }
+        if(mUIState == null) {
+            mUIState = UIState.LOGIN_CHOICE;
+        }
+
+        Fragment frag = getFragmentManager().findFragmentByTag(mUIState);
+        if (frag != null) {
+            replaceFragment(frag, mUIState);
+        } else {
+            replaceFragment(LoginChoiceFragment.newInstance(), UIState.LOGIN_CHOICE);
+        }
     }
 
     @Override
     public void load(Bundle data, int type) {
-
+        if(type == 0) {
+            showProgress();
+                startActivityForResult(
+                        BasicAuthActivity
+                                .newInstance(mPackageName), 0);
+            hideProgress();
+        } else {
+            getLoaderManager().initLoader(3000, null, tidbitLoader);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         setResult(resultCode, data);
-        finish();
+        if(resultCode != BillingResponseCodes.RESULT_USER_CANCELED) {
+            finish();
+        }
     }
 }

@@ -172,25 +172,29 @@ public class SignInAsyncTaskLoader extends AsyncTaskLoader<BitJwtCallbackRespons
             if (dto.getCode() != 200 && mInband) {
                 String id = mKey.toAddress(MainNetParams.get()).toString();
 
-                AccountsContentValues kcv = new AccountsContentValues();
-                kcv.putBitid(id);
+                AccountsContentValues accountValues = new AccountsContentValues();
+                accountValues.putBitid(id);
                 if (!TextUtils.isEmpty(dto.getAppToken())) {
-                    kcv.putToken(dto.getAppToken().trim());
+                    accountValues.putToken(dto.getAppToken().trim());
                 }
 
-                kcv.putDate(new Date().getTime());
+                accountValues.putDate(new Date().getTime());
+                accountValues.putAuthtype("key");
+                accountValues.putAlias(id);
 
                 AccountsSelection as = new AccountsSelection();
                 as.bitid(id);
                 as.delete(getContext().getContentResolver());
 
-                getContext().getContentResolver().insert(AccountsColumns.CONTENT_URI, kcv.values());
+                getContext().getContentResolver().insert(AccountsColumns.CONTENT_URI,
+                        accountValues.values());
 
-                AuthorizationContentValues acv = new AuthorizationContentValues();
-                acv.putBitid(id);
-                acv.putScope(mBitID.getScope());
-                acv.putApp(mBitID.getApplication());
-                acv.putDate(new Date().getTime());
+                AuthorizationContentValues authValues = new AuthorizationContentValues();
+                authValues.putBitid(id);
+                authValues.putScope(mBitID.getScope());
+                authValues.putApp(mBitID.getApplication());
+                authValues.putDate(new Date().getTime());
+                authValues.putAlias(id);
 
                 //BUG in 3rd-party library - multiple selects not working
               //  AuthorizationSelection authSelect = new AuthorizationSelection();
@@ -202,17 +206,11 @@ public class SignInAsyncTaskLoader extends AsyncTaskLoader<BitJwtCallbackRespons
                         new String[]{
                                 id, mBitID.getApplication()
                         });
-                acv.insert(getContext().getContentResolver());
-
-/*
-                if (acv.update(getContext().getContentResolver(), authSelect) != 1) {
-                    acv.insert(getContext().getContentResolver());
-                }
-*/
+                authValues.insert(getContext().getContentResolver());
 
                 AccountSettings.get(getContext()).saveToken(dto.getMasterToken());
                 AccountSettings.get(getContext()).saveBitId(id);
-                Events.accountChange(getContext(), id);
+                Events.accountChange(getContext(), id, id);
             }
 
             return dto;

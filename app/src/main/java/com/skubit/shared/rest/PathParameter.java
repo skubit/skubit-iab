@@ -34,8 +34,9 @@ public class PathParameter {
 
     public static final String USER_PROFILE = "userProfile";
 
+    public static final String LOGIN_WITH_USERNAME = "loginWithUsername";
+
     public static final String GET_TIDBIT = "getTidbit";
 
-    public static final String TIDBIT_CALLBACK = "tidbitCallback";
 
 }

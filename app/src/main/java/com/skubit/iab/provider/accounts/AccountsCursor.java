@@ -1,14 +1,15 @@
 package com.skubit.iab.provider.accounts;
 
-import com.skubit.iab.provider.base.AbstractCursor;
+import java.util.Date;
 
 import android.database.Cursor;
+
+import com.skubit.iab.provider.base.AbstractCursor;
 
 /**
  * Cursor wrapper for the {@code accounts} table.
  */
 public class AccountsCursor extends AbstractCursor implements AccountsModel {
-
     public AccountsCursor(Cursor cursor) {
         super(cursor);
     }
@@ -17,7 +18,10 @@ public class AccountsCursor extends AbstractCursor implements AccountsModel {
      * Primary key.
      */
     public long getId() {
-        return getLongOrNull(AccountsColumns._ID);
+        Long res = getLongOrNull(AccountsColumns._ID);
+        if (res == null)
+            throw new NullPointerException("The value of '_id' in the database was null, which is not allowed according to the model definition");
+        return res;
     }
 
     /**
@@ -25,7 +29,26 @@ public class AccountsCursor extends AbstractCursor implements AccountsModel {
      * Can be {@code null}.
      */
     public String getBitid() {
-        return getStringOrNull(AccountsColumns.BITID);
+        String res = getStringOrNull(AccountsColumns.BITID);
+        return res;
+    }
+
+    /**
+     * Get the {@code alias} value.
+     * Can be {@code null}.
+     */
+    public String getAlias() {
+        String res = getStringOrNull(AccountsColumns.ALIAS);
+        return res;
+    }
+
+    /**
+     * Get the {@code authtype} value.
+     * Can be {@code null}.
+     */
+    public String getAuthtype() {
+        String res = getStringOrNull(AccountsColumns.AUTHTYPE);
+        return res;
     }
 
     /**
@@ -33,7 +56,8 @@ public class AccountsCursor extends AbstractCursor implements AccountsModel {
      * Can be {@code null}.
      */
     public String getToken() {
-        return getStringOrNull(AccountsColumns.TOKEN);
+        String res = getStringOrNull(AccountsColumns.TOKEN);
+        return res;
     }
 
     /**
@@ -41,6 +65,7 @@ public class AccountsCursor extends AbstractCursor implements AccountsModel {
      * Can be {@code null}.
      */
     public Long getDate() {
-        return getLongOrNull(AccountsColumns.DATE);
+        Long res = getLongOrNull(AccountsColumns.DATE);
+        return res;
     }
 }

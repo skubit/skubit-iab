@@ -107,7 +107,7 @@ public class ChooseAddressFragment extends BaseFragment<BitIdCallback> {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (mEcKey != null) {
-            getLoaderManager().initLoader(2, null, mLoader);
+           // getLoaderManager().initLoader(2, null, mLoader);
         }
     }
 
@@ -157,7 +157,7 @@ public class ChooseAddressFragment extends BaseFragment<BitIdCallback> {
                 }
 
                 mEcKey = ECKey.fromPrivate(kc.getPriv());
-                getLoaderManager().initLoader(2000, null, mLoader);
+                getLoaderManager().initLoader(mEcKey.hashCode(), null, mLoader);
             }
         });
 

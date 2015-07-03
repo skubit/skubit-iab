@@ -33,13 +33,13 @@ public class TidbitLoader extends BaseLoader<LoaderResult<TidbitDto>> {
 
     private final String mScopes;
 
-    private final AuthenticationRestService mChannelRestService;
+    private final AuthenticationRestService mAuthenticationRestService;
 
     public TidbitLoader(Context context, String scopes, String app) {
         super(context);
         this.mApp = app;
         this.mScopes = scopes;
-        mChannelRestService = new AuthenticationService(getContext())
+        mAuthenticationRestService = new AuthenticationService(getContext())
                 .getRestService();
     }
 
@@ -52,7 +52,7 @@ public class TidbitLoader extends BaseLoader<LoaderResult<TidbitDto>> {
     public LoaderResult<TidbitDto> loadInBackground() {
         LoaderResult result = new LoaderResult();
         try {
-            result.result = mChannelRestService.getTidbit(mScopes, mApp, true);
+            result.result = mAuthenticationRestService.getTidbit(mScopes, mApp, true);
             return result;
         } catch (Exception e) {
             e.printStackTrace();

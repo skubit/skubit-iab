@@ -5,6 +5,14 @@
             "type": "String"
         },
         {
+             "name": "alias",
+             "type": "String"
+        },
+        {
+             "name": "authType",
+             "type": "String"
+        },
+        {
             "name": "token",
             "type": "String"
         },

@@ -68,4 +68,15 @@ public class UserDto implements Dto {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "contactWebsite='" + contactWebsite + '\'' +
+                ", email='" + email + '\'' +
+                ", payoutAddress='" + payoutAddress + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                '}';
+    }
 }

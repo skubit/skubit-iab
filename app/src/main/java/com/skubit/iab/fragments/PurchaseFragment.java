@@ -140,9 +140,15 @@ public class PurchaseFragment extends DefaultFragment {
             mPurchaseBtn.setVisibility(View.GONE);
             mSendButton.setVisibility(View.GONE);
         } else {
+            if(skuDetailsDto.getSatoshi() == 0) {
+                mPrice.setText("FREE");
+                mPurchaseBtn.setText("FREE");
+                mSendButton.setVisibility(View.GONE);
+            } else {
+                Bitcoin bitcoin = new Bitcoin(new Satoshi(skuDetailsDto.getSatoshi()));
+                mPrice.setText(bitcoin.getDisplay() + " BTC");
+            }
 
-            Bitcoin bitcoin = new Bitcoin(new Satoshi(skuDetailsDto.getSatoshi()));
-            mPrice.setText(bitcoin.getDisplay() + " BTC");
         }
         mTitle.setText(skuDetailsDto.getTitle());
     }

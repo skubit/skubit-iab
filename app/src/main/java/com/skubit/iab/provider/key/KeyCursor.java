@@ -1,14 +1,15 @@
 package com.skubit.iab.provider.key;
 
-import com.skubit.iab.provider.base.AbstractCursor;
+import java.util.Date;
 
 import android.database.Cursor;
+
+import com.skubit.iab.provider.base.AbstractCursor;
 
 /**
  * Cursor wrapper for the {@code key} table.
  */
 public class KeyCursor extends AbstractCursor implements KeyModel {
-
     public KeyCursor(Cursor cursor) {
         super(cursor);
     }
@@ -17,7 +18,10 @@ public class KeyCursor extends AbstractCursor implements KeyModel {
      * Primary key.
      */
     public long getId() {
-        return getLongOrNull(KeyColumns._ID);
+        Long res = getLongOrNull(KeyColumns._ID);
+        if (res == null)
+            throw new NullPointerException("The value of '_id' in the database was null, which is not allowed according to the model definition");
+        return res;
     }
 
     /**
@@ -25,7 +29,8 @@ public class KeyCursor extends AbstractCursor implements KeyModel {
      * Can be {@code null}.
      */
     public String getNickname() {
-        return getStringOrNull(KeyColumns.NICKNAME);
+        String res = getStringOrNull(KeyColumns.NICKNAME);
+        return res;
     }
 
     /**
@@ -33,7 +38,8 @@ public class KeyCursor extends AbstractCursor implements KeyModel {
      * Can be {@code null}.
      */
     public byte[] getPub() {
-        return getBlobOrNull(KeyColumns.PUB);
+        byte[] res = getBlobOrNull(KeyColumns.PUB);
+        return res;
     }
 
     /**
@@ -41,7 +47,8 @@ public class KeyCursor extends AbstractCursor implements KeyModel {
      * Can be {@code null}.
      */
     public byte[] getPriv() {
-        return getBlobOrNull(KeyColumns.PRIV);
+        byte[] res = getBlobOrNull(KeyColumns.PRIV);
+        return res;
     }
 
     /**
@@ -49,6 +56,7 @@ public class KeyCursor extends AbstractCursor implements KeyModel {
      * Can be {@code null}.
      */
     public String getAddress() {
-        return getStringOrNull(KeyColumns.ADDRESS);
+        String res = getStringOrNull(KeyColumns.ADDRESS);
+        return res;
     }
 }

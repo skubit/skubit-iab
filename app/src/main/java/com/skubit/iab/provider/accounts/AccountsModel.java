@@ -2,6 +2,8 @@ package com.skubit.iab.provider.accounts;
 
 import com.skubit.iab.provider.base.BaseModel;
 
+import java.util.Date;
+
 /**
  * Data model for the {@code accounts} table.
  */
@@ -12,6 +14,18 @@ public interface AccountsModel extends BaseModel {
      * Can be {@code null}.
      */
     String getBitid();
+
+    /**
+     * Get the {@code alias} value.
+     * Can be {@code null}.
+     */
+    String getAlias();
+
+    /**
+     * Get the {@code authtype} value.
+     * Can be {@code null}.
+     */
+    String getAuthtype();
 
     /**
      * Get the {@code token} value.

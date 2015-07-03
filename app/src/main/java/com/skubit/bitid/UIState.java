@@ -17,6 +17,10 @@ package com.skubit.bitid;
 
 public class UIState {
 
+    public final static String LOGIN_CHOICE = "LOGIN_CHOICE";
+
+    public final static String BASIC_AUTH = "BASIC_AUTH";
+
     public final static String CHOOSE_ADDRESS = "CHOOSE_ADDRESS";
 
     public final static String CREATE_ADDRESS = "CREATE_ADDRESS";
@@ -24,4 +28,5 @@ public class UIState {
     public final static String SIGNIN_REQUEST = "SIGNIN_REQUEST";
 
     public final static String SIGNIN_RESPONSE = "SIGNIN_RESPONSE";
+
 }

@@ -1,15 +1,17 @@
 package com.skubit.iab.provider.key;
 
-import com.skubit.iab.provider.base.AbstractContentValues;
+import java.util.Date;
 
+import android.content.Context;
 import android.content.ContentResolver;
 import android.net.Uri;
+
+import com.skubit.iab.provider.base.AbstractContentValues;
 
 /**
  * Content values wrapper for the {@code key} table.
  */
 public class KeyContentValues extends AbstractContentValues {
-
     @Override
     public Uri uri() {
         return KeyColumns.CONTENT_URI;
@@ -19,11 +21,20 @@ public class KeyContentValues extends AbstractContentValues {
      * Update row(s) using the values stored by this object and the given selection.
      *
      * @param contentResolver The content resolver to use.
-     * @param where           The selection to use (can be {@code null}).
+     * @param where The selection to use (can be {@code null}).
      */
-    public int update(ContentResolver contentResolver, KeySelection where) {
-        return contentResolver.update(uri(), values(), where == null ? null : where.sel(),
-                where == null ? null : where.args());
+    public int update(ContentResolver contentResolver,  KeySelection where) {
+        return contentResolver.update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
+    }
+
+    /**
+     * Update row(s) using the values stored by this object and the given selection.
+     *
+     * @param contentResolver The content resolver to use.
+     * @param where The selection to use (can be {@code null}).
+     */
+    public int update(Context context,  KeySelection where) {
+        return context.getContentResolver().update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
     public KeyContentValues putNickname(String value) {

@@ -1,14 +1,15 @@
 package com.skubit.iab.provider.authorization;
 
-import com.skubit.iab.provider.base.AbstractCursor;
+import java.util.Date;
 
 import android.database.Cursor;
+
+import com.skubit.iab.provider.base.AbstractCursor;
 
 /**
  * Cursor wrapper for the {@code authorization} table.
  */
 public class AuthorizationCursor extends AbstractCursor implements AuthorizationModel {
-
     public AuthorizationCursor(Cursor cursor) {
         super(cursor);
     }
@@ -17,7 +18,10 @@ public class AuthorizationCursor extends AbstractCursor implements Authorization
      * Primary key.
      */
     public long getId() {
-        return getLongOrNull(AuthorizationColumns._ID);
+        Long res = getLongOrNull(AuthorizationColumns._ID);
+        if (res == null)
+            throw new NullPointerException("The value of '_id' in the database was null, which is not allowed according to the model definition");
+        return res;
     }
 
     /**
@@ -25,7 +29,17 @@ public class AuthorizationCursor extends AbstractCursor implements Authorization
      * Can be {@code null}.
      */
     public String getBitid() {
-        return getStringOrNull(AuthorizationColumns.BITID);
+        String res = getStringOrNull(AuthorizationColumns.BITID);
+        return res;
+    }
+
+    /**
+     * Get the {@code alias} value.
+     * Can be {@code null}.
+     */
+    public String getAlias() {
+        String res = getStringOrNull(AuthorizationColumns.ALIAS);
+        return res;
     }
 
     /**
@@ -33,7 +47,8 @@ public class AuthorizationCursor extends AbstractCursor implements Authorization
      * Can be {@code null}.
      */
     public String getApp() {
-        return getStringOrNull(AuthorizationColumns.APP);
+        String res = getStringOrNull(AuthorizationColumns.APP);
+        return res;
     }
 
     /**
@@ -41,7 +56,8 @@ public class AuthorizationCursor extends AbstractCursor implements Authorization
      * Can be {@code null}.
      */
     public String getScope() {
-        return getStringOrNull(AuthorizationColumns.SCOPE);
+        String res = getStringOrNull(AuthorizationColumns.SCOPE);
+        return res;
     }
 
     /**
@@ -49,6 +65,7 @@ public class AuthorizationCursor extends AbstractCursor implements Authorization
      * Can be {@code null}.
      */
     public Long getDate() {
-        return getLongOrNull(AuthorizationColumns.DATE);
+        Long res = getLongOrNull(AuthorizationColumns.DATE);
+        return res;
     }
 }

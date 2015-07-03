@@ -1,10 +1,5 @@
 package com.skubit.iab.provider;
 
-import com.skubit.iab.BuildConfig;
-import com.skubit.iab.provider.accounts.AccountsColumns;
-import com.skubit.iab.provider.authorization.AuthorizationColumns;
-import com.skubit.iab.provider.key.KeyColumns;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
@@ -14,15 +9,27 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
 
-public class AccountSQLiteOpenHelper extends SQLiteOpenHelper {
+import com.skubit.iab.BuildConfig;
+import com.skubit.iab.provider.accounts.AccountsColumns;
+import com.skubit.iab.provider.authorization.AuthorizationColumns;
+import com.skubit.iab.provider.key.KeyColumns;
 
-    public static final String DATABASE_FILE_NAME = "accounts.db";
+public class AccountSQLiteOpenHelper extends SQLiteOpenHelper {
+    private static final String TAG = AccountSQLiteOpenHelper.class.getSimpleName();
+
+    public static final String DATABASE_FILE_NAME = "accounts2.db";
+    private static final int DATABASE_VERSION = 1;
+    private static AccountSQLiteOpenHelper sInstance;
+    private final Context mContext;
+    private final AccountSQLiteOpenHelperCallbacks mOpenHelperCallbacks;
 
     // @formatter:off
     public static final String SQL_CREATE_TABLE_ACCOUNTS = "CREATE TABLE IF NOT EXISTS "
             + AccountsColumns.TABLE_NAME + " ( "
             + AccountsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + AccountsColumns.BITID + " TEXT, "
+            + AccountsColumns.ALIAS + " TEXT, "
+            + AccountsColumns.AUTHTYPE + " TEXT, "
             + AccountsColumns.TOKEN + " TEXT, "
             + AccountsColumns.DATE + " INTEGER "
             + " );";
@@ -31,6 +38,7 @@ public class AccountSQLiteOpenHelper extends SQLiteOpenHelper {
             + AuthorizationColumns.TABLE_NAME + " ( "
             + AuthorizationColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + AuthorizationColumns.BITID + " TEXT, "
+            + AuthorizationColumns.ALIAS + " TEXT, "
             + AuthorizationColumns.APP + " TEXT, "
             + AuthorizationColumns.SCOPE + " TEXT, "
             + AuthorizationColumns.DATE + " INTEGER "
@@ -45,30 +53,7 @@ public class AccountSQLiteOpenHelper extends SQLiteOpenHelper {
             + KeyColumns.ADDRESS + " TEXT "
             + " );";
 
-    private static final String TAG = AccountSQLiteOpenHelper.class.getSimpleName();
-
-    private static final int DATABASE_VERSION = 1;
-
-    private static AccountSQLiteOpenHelper sInstance;
-
-    private final Context mContext;
-
-    private final AccountSQLiteOpenHelperCallbacks mOpenHelperCallbacks;
-
     // @formatter:on
-
-    private AccountSQLiteOpenHelper(Context context) {
-        super(context, DATABASE_FILE_NAME, null, DATABASE_VERSION);
-        mContext = context;
-        mOpenHelperCallbacks = new AccountSQLiteOpenHelperCallbacks();
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private AccountSQLiteOpenHelper(Context context, DatabaseErrorHandler errorHandler) {
-        super(context, DATABASE_FILE_NAME, null, DATABASE_VERSION, errorHandler);
-        mContext = context;
-        mOpenHelperCallbacks = new AccountSQLiteOpenHelperCallbacks();
-    }
 
     public static AccountSQLiteOpenHelper getInstance(Context context) {
         // Use the application context, which will ensure that you
@@ -87,12 +72,20 @@ public class AccountSQLiteOpenHelper extends SQLiteOpenHelper {
         return newInstancePostHoneycomb(context);
     }
 
+
     /*
      * Pre Honeycomb.
      */
     private static AccountSQLiteOpenHelper newInstancePreHoneycomb(Context context) {
         return new AccountSQLiteOpenHelper(context);
     }
+
+    private AccountSQLiteOpenHelper(Context context) {
+        super(context, DATABASE_FILE_NAME, null, DATABASE_VERSION);
+        mContext = context;
+        mOpenHelperCallbacks = new AccountSQLiteOpenHelperCallbacks();
+    }
+
 
     /*
      * Post Honeycomb.
@@ -102,11 +95,17 @@ public class AccountSQLiteOpenHelper extends SQLiteOpenHelper {
         return new AccountSQLiteOpenHelper(context, new DefaultDatabaseErrorHandler());
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private AccountSQLiteOpenHelper(Context context, DatabaseErrorHandler errorHandler) {
+        super(context, DATABASE_FILE_NAME, null, DATABASE_VERSION, errorHandler);
+        mContext = context;
+        mOpenHelperCallbacks = new AccountSQLiteOpenHelperCallbacks();
+    }
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "onCreate");
-        }
+        if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         mOpenHelperCallbacks.onPreCreate(mContext, db);
         db.execSQL(SQL_CREATE_TABLE_ACCOUNTS);
         db.execSQL(SQL_CREATE_TABLE_AUTHORIZATION);

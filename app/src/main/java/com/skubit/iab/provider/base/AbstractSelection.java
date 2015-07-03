@@ -1,62 +1,40 @@
 package com.skubit.iab.provider.base;
 
-import android.content.ContentResolver;
-import android.net.Uri;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.content.Context;
+import android.content.ContentResolver;
+import android.net.Uri;
+
 public abstract class AbstractSelection<T extends AbstractSelection<?>> {
-
     private static final String EQ = "=?";
-
     private static final String PAREN_OPEN = "(";
-
     private static final String PAREN_CLOSE = ")";
-
     private static final String AND = " AND ";
-
     private static final String OR = " OR ";
-
     private static final String IS_NULL = " IS NULL";
-
     private static final String IS_NOT_NULL = " IS NOT NULL";
-
     private static final String IN = " IN (";
-
     private static final String NOT_IN = " NOT IN (";
-
     private static final String COMMA = ",";
-
     private static final String GT = ">?";
-
     private static final String LT = "<?";
-
     private static final String GT_EQ = ">=?";
-
     private static final String LT_EQ = "<=?";
-
     private static final String NOT_EQ = "<>?";
-
     private static final String LIKE = " LIKE ?";
-
     private static final String CONTAINS = " LIKE '%' || ? || '%'";
-
     private static final String STARTS = " LIKE ? || '%'";
-
     private static final String ENDS = " LIKE '%' || ?";
 
     private final StringBuilder mSelection = new StringBuilder();
-
     private final List<String> mSelectionArgs = new ArrayList<String>(5);
 
     Boolean mNotify;
-
     String mGroupBy;
-
     String mHaving;
-
     Integer mLimit;
 
     protected void addEquals(String column, Object[] value) {
@@ -273,7 +251,7 @@ public abstract class AbstractSelection<T extends AbstractSelection<?>> {
     }
 
     protected Object[] toObjectArray(Boolean value) {
-        return new Object[]{value};
+        return new Object[] { value };
     }
 
 
@@ -289,9 +267,7 @@ public abstract class AbstractSelection<T extends AbstractSelection<?>> {
      */
     public String[] args() {
         int size = mSelectionArgs.size();
-        if (size == 0) {
-            return null;
-        }
+        if (size == 0) return null;
         return mSelectionArgs.toArray(new String[size]);
     }
 
@@ -301,18 +277,10 @@ public abstract class AbstractSelection<T extends AbstractSelection<?>> {
      */
     public Uri uri() {
         Uri uri = baseUri();
-        if (mNotify != null) {
-            uri = BaseContentProvider.notify(uri, mNotify);
-        }
-        if (mGroupBy != null) {
-            uri = BaseContentProvider.groupBy(uri, mGroupBy);
-        }
-        if (mHaving != null) {
-            uri = BaseContentProvider.having(uri, mHaving);
-        }
-        if (mLimit != null) {
-            uri = BaseContentProvider.limit(uri, String.valueOf(mLimit));
-        }
+        if (mNotify != null) uri = BaseContentProvider.notify(uri, mNotify);
+        if (mGroupBy != null) uri = BaseContentProvider.groupBy(uri, mGroupBy);
+        if (mHaving != null) uri = BaseContentProvider.having(uri, mHaving);
+        if (mLimit != null) uri = BaseContentProvider.limit(uri, String.valueOf(mLimit));
         return uri;
     }
 
@@ -326,6 +294,16 @@ public abstract class AbstractSelection<T extends AbstractSelection<?>> {
      */
     public int delete(ContentResolver contentResolver) {
         return contentResolver.delete(uri(), sel(), args());
+    }
+
+    /**
+     * Deletes row(s) specified by this selection.
+     *
+     * @param Context the context to use.
+     * @return The number of rows deleted.
+     */
+    public int delete(Context context) {
+        return context.getContentResolver().delete(uri(), sel(), args());
     }
 
     @SuppressWarnings("unchecked")

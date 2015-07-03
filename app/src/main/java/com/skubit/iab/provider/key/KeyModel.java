@@ -2,6 +2,8 @@ package com.skubit.iab.provider.key;
 
 import com.skubit.iab.provider.base.BaseModel;
 
+import java.util.Date;
+
 /**
  * Data model for the {@code key} table.
  */

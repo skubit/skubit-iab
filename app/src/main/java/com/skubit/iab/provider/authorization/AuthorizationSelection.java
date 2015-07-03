@@ -1,16 +1,18 @@
 package com.skubit.iab.provider.authorization;
 
-import com.skubit.iab.provider.base.AbstractSelection;
+import java.util.Date;
 
+import android.content.Context;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
+
+import com.skubit.iab.provider.base.AbstractSelection;
 
 /**
  * Selection for the {@code authorization} table.
  */
 public class AuthorizationSelection extends AbstractSelection<AuthorizationSelection> {
-
     @Override
     protected Uri baseUri() {
         return AuthorizationColumns.CONTENT_URI;
@@ -20,20 +22,14 @@ public class AuthorizationSelection extends AbstractSelection<AuthorizationSelec
      * Query the given content resolver using this selection.
      *
      * @param contentResolver The content resolver to query.
-     * @param projection      A list of which columns to return. Passing null will return all
-     *                        columns, which is inefficient.
-     * @param sortOrder       How to order the rows, formatted as an SQL ORDER BY clause (excluding
-     *                        the ORDER BY itself). Passing null will use the default sort
-     *                        order, which may be unordered.
-     * @return A {@code AuthorizationCursor} object, which is positioned before the first entry, or
-     * null.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @param sortOrder How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort
+     *            order, which may be unordered.
+     * @return A {@code AuthorizationCursor} object, which is positioned before the first entry, or null.
      */
-    public AuthorizationCursor query(ContentResolver contentResolver, String[] projection,
-            String sortOrder) {
+    public AuthorizationCursor query(ContentResolver contentResolver, String[] projection, String sortOrder) {
         Cursor cursor = contentResolver.query(uri(), projection, sel(), args(), sortOrder);
-        if (cursor == null) {
-            return null;
-        }
+        if (cursor == null) return null;
         return new AuthorizationCursor(cursor);
     }
 
@@ -49,6 +45,35 @@ public class AuthorizationSelection extends AbstractSelection<AuthorizationSelec
      */
     public AuthorizationCursor query(ContentResolver contentResolver) {
         return query(contentResolver, null, null);
+    }
+
+    /**
+     * Query the given content resolver using this selection.
+     *
+     * @param context The context to use for the query.
+     * @param projection A list of which columns to return. Passing null will return all columns, which is inefficient.
+     * @param sortOrder How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort
+     *            order, which may be unordered.
+     * @return A {@code AuthorizationCursor} object, which is positioned before the first entry, or null.
+     */
+    public AuthorizationCursor query(Context context, String[] projection, String sortOrder) {
+        Cursor cursor = context.getContentResolver().query(uri(), projection, sel(), args(), sortOrder);
+        if (cursor == null) return null;
+        return new AuthorizationCursor(cursor);
+    }
+
+    /**
+     * Equivalent of calling {@code query(context, projection, null)}.
+     */
+    public AuthorizationCursor query(Context context, String[] projection) {
+        return query(context, projection, null);
+    }
+
+    /**
+     * Equivalent of calling {@code query(context, projection, null, null)}.
+     */
+    public AuthorizationCursor query(Context context) {
+        return query(context, null, null);
     }
 
 
@@ -84,6 +109,36 @@ public class AuthorizationSelection extends AbstractSelection<AuthorizationSelec
 
     public AuthorizationSelection bitidEndsWith(String... value) {
         addEndsWith(AuthorizationColumns.BITID, value);
+        return this;
+    }
+
+    public AuthorizationSelection alias(String... value) {
+        addEquals(AuthorizationColumns.ALIAS, value);
+        return this;
+    }
+
+    public AuthorizationSelection aliasNot(String... value) {
+        addNotEquals(AuthorizationColumns.ALIAS, value);
+        return this;
+    }
+
+    public AuthorizationSelection aliasLike(String... value) {
+        addLike(AuthorizationColumns.ALIAS, value);
+        return this;
+    }
+
+    public AuthorizationSelection aliasContains(String... value) {
+        addContains(AuthorizationColumns.ALIAS, value);
+        return this;
+    }
+
+    public AuthorizationSelection aliasStartsWith(String... value) {
+        addStartsWith(AuthorizationColumns.ALIAS, value);
+        return this;
+    }
+
+    public AuthorizationSelection aliasEndsWith(String... value) {
+        addEndsWith(AuthorizationColumns.ALIAS, value);
         return this;
     }
 

@@ -20,6 +20,7 @@ import com.skubit.bitid.BitIdCallback;
 import com.skubit.bitid.ResultCode;
 import com.skubit.dialog.BaseFragment;
 import com.skubit.iab.R;
+import com.skubit.iab.Utils;
 import com.skubit.shared.dto.BitJwtCallbackResponseDto;
 
 import android.os.Bundle;
@@ -31,15 +32,16 @@ import android.widget.TextView;
 
 public class SignInResponseFragment extends BaseFragment<BitIdCallback> {
 
-    public static SignInResponseFragment newInstance(BitJwtCallbackResponseDto data, String bitId) {
+    public static SignInResponseFragment newInstance(int code, String appToken,
+            String message, String bitId) {
         SignInResponseFragment signInResponseFragment = new SignInResponseFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("resultCode", data.getCode());
-        if (!TextUtils.isEmpty(data.getMessage())) {
-            bundle.putString("message", data.getMessage());
+        bundle.putInt("resultCode", code);
+        if (!TextUtils.isEmpty(message)) {
+            bundle.putString("message", message);
         }
-        if (!TextUtils.isEmpty(data.getAppToken())) {
-            bundle.putString("appToken", data.getAppToken());
+        if (!TextUtils.isEmpty(appToken)) {
+            bundle.putString("appToken", appToken);
         }
 
         if (!TextUtils.isEmpty(bitId)) {
@@ -48,6 +50,10 @@ public class SignInResponseFragment extends BaseFragment<BitIdCallback> {
 
         signInResponseFragment.setArguments(bundle);
         return signInResponseFragment;
+    }
+
+    public static SignInResponseFragment newInstance(BitJwtCallbackResponseDto data, String bitId) {
+        return newInstance(data.getCode(), data.getAppToken(), data.getMessage(), bitId);
     }
 
     private String getMessageValue(String message) {
@@ -64,6 +70,9 @@ public class SignInResponseFragment extends BaseFragment<BitIdCallback> {
         final int resultCode = getArguments().getInt("resultCode");
         final String token = getArguments().getString("appToken");
         final String bitId = getArguments().getString("bitId");
+        //TODO: look up alias in provider
+        final String alias = Utils.getAccountAlias(getActivity().getBaseContext(), bitId);
+
         if (resultCode == ResultCode.OK) {
             messageView.setText("Login successful");
         } else {
@@ -76,7 +85,9 @@ public class SignInResponseFragment extends BaseFragment<BitIdCallback> {
             @Override
             public void onClick(View v) {
                 if (mCallbacks != null) {
-                    mCallbacks.sendResultsBackToCaller(resultCode, bitId + ":" + token);
+                    //TODO: since BitId can be userDefined now, ':' should be illegal char in id
+                    mCallbacks.sendResultsBackToCaller(resultCode, bitId + ":" + token
+                            + ":" + alias);
                 }
             }
         });

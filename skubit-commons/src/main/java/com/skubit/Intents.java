@@ -20,6 +20,8 @@ import android.content.IntentFilter;
 
 public class Intents {
 
+    public static final String ALIAS = "com.skubit.ALIAS";
+
     public static final String ACCOUNT_NAME = "com.skubit.ACCOUNT_NAME";
 
     public static IntentFilter accountChangeFilter() {
